@@ -114,7 +114,6 @@ class NewsController {
 
     static async update(req, res) {
         try {
-
             const { id } = req.params
             const user = req.user
             const body = req.body

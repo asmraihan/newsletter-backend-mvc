@@ -1,8 +1,11 @@
 import express from 'express';
 import "dotenv/config"
 import fileUpload from 'express-fileupload';
-const app = express();
+import cors from 'cors';
+import helmet from 'helmet';
 
+
+const app = express();
 const port = process.env.PORT || 5000;
 
 //import routes
@@ -16,6 +19,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(fileUpload());
 app.use(express.static('public'));
+app.use(cors(
+    // { origin: "https://newsletter.com",}
+));
+app.use(helmet());
 
 
 //routes 

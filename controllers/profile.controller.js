@@ -13,8 +13,33 @@ class ProfileController {
         }
     }
 
-    static async show(req, res) { }
-    static async store(req, res) { }
+    static async show(req, res) {
+        try {
+            const { id } = req.params
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: Number(id)
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    image: true,
+                    createdAt: true
+                }
+            })
+
+            if (!user) {
+                return res.status(404).json({ message: "User not found" })
+            }
+
+            return res.status(200).json({ user })
+        } catch (error) {
+            return res.status(500).json({ error: error.message, message: "Something went wrong" })
+        }
+    }
+
+    static async store(req, res) { } // Create user profile later
 
     // Update user profile
     static async update(req, res) {
@@ -58,7 +83,27 @@ class ProfileController {
             return res.status(500).json({ error: error.message, message: "Something went wrong" })
         }
     }
-    static async destroy(req, res) { }
+    static async destroy(req, res) { 
+        try {
+            const { id } = req.params
+            const authUser = req.user
+
+            if (authUser.role !== "ADMIN") {
+                return res.status(403).json({ message: "You are not authorized to perform this action" })
+            }
+
+            await prisma.user.delete({
+                where: {
+                    id: Number(id)
+                }
+            })
+
+            return res.status(200).json({ message: "User deleted successfully" })
+
+        } catch (error) {
+            return res.status(500).json({ error: error.message, message: "Something went wrong" })
+        }
+    }
 
 }
 

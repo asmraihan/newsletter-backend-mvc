@@ -8,5 +8,9 @@ router.get("/profile",authMiddleware, ProfileController.index)
 
 router.put("/profile/:id",authMiddleware, ProfileController.update)
 
+router.get("/profile/:id", ProfileController.show)
+
+router.delete("/profile/:id",authMiddleware, ProfileController.destroy)
+
 
 export default router
