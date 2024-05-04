@@ -1,19 +1,23 @@
 import express from 'express';
 import "dotenv/config"
+import fileUpload from 'express-fileupload';
 const app = express();
+
 const port = process.env.PORT || 5000;
 
 //import routes
 import authRouter from './routes/auth.router.js';
+import profileRouter from './routes/profile.router.js';
 
 
 //Middleware 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
+app.use(fileUpload());
 
 //routes 
 app.use("/api/auth", authRouter);
+app.use("/api", profileRouter);
 
 
 
