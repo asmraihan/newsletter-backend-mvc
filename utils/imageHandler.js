@@ -1,6 +1,7 @@
+import fs from "fs"
 import { generateRandomNumber } from "./helper.js";
 
-const uploadImage = async (image) => {
+export const uploadImage = async (image) => {
     console.log(image)
     const imageExt = image.name.split(".").pop()
     const imageName = generateRandomNumber() + "." + imageExt
@@ -18,4 +19,12 @@ const uploadImage = async (image) => {
 }
 
 
-export { uploadImage }
+export const removeImage = async (imageName) => {
+    const path = process.cwd() + "/public/images/" + imageName
+    if(fs.existsSync(path)){
+        fs.unlinkSync(path)
+    }
+}
+
+
+
