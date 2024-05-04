@@ -8,16 +8,20 @@ const port = process.env.PORT || 5000;
 //import routes
 import authRouter from './routes/auth.router.js';
 import profileRouter from './routes/profile.router.js';
+import newsRouter from './routes/news.router.js';
 
 
 //Middleware 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(fileUpload());
+app.use(express.static('public'));
+
 
 //routes 
 app.use("/api/auth", authRouter);
 app.use("/api", profileRouter);
+app.use("/api", newsRouter);
 
 
 
