@@ -3,7 +3,7 @@ import "dotenv/config"
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import helmet from 'helmet';
-
+import { limiter } from './utils/ratelimiter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +23,7 @@ app.use(cors(
     // { origin: "https://newsletter.com",}
 ));
 app.use(helmet());
+app.use(limiter);
 
 
 //routes 
