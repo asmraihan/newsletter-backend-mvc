@@ -1,10 +1,11 @@
 import { Router } from "express";
 import NewsController from "../controllers/news.controller.js";
 import authMiddleware from "../middleware/Authenticate.js";
+import redisCache from "../utils/redis.config.js";
 
 const router = Router()
 
-router.get("/news", NewsController.index)
+router.get("/news", redisCache.route(), NewsController.index)
 
 router.post("/news",authMiddleware, NewsController.store)
 

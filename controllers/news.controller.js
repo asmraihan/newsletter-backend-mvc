@@ -1,6 +1,7 @@
 import prisma from "../utils/db.config.js";
 import { imageValidator } from "../utils/helper.js";
 import { removeImage, uploadImage } from "../utils/imageHandler.js";
+import redisCache from "../utils/redis.config.js";
 class NewsController {
     
     static async index(req, res) {
@@ -73,6 +74,13 @@ class NewsController {
                     content: body.content,
                     image: result.imageName,
                     user_id: user.id
+                }
+            })
+
+            // remove cache from redis
+            redisCache.del("/api/news" , (err, count) => {
+                if(err){
+                    throw err
                 }
             })
 
