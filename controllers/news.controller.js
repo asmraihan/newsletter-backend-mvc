@@ -1,6 +1,7 @@
 import prisma from "../utils/db.config.js";
 import { imageValidator } from "../utils/helper.js";
 import { removeImage, uploadImage } from "../utils/imageHandler.js";
+import logger from "../utils/logger.js";
 import redisCache from "../utils/redis.config.js";
 class NewsController {
     
@@ -87,6 +88,8 @@ class NewsController {
             return res.status(200).json({ news, message: "News created successfully" })
 
         } catch (error) {
+            // log error
+            logger.error(error?.message)
             return res.status(500).json({ error: error.message, message: "Something went wrong" })
         }
     }

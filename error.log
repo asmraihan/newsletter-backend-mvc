@@ -1,0 +1,15 @@
+2024-05-05T17:46:49.909Z [right meow!] error: Hello world error!
+2024-05-05T17:49:25.537Z [right meow!] error: Cannot read properties of undefined (reading 'id')
+2024-05-05T17:50:29.502Z [right meow!] error: 
+Invalid `prisma.news.create()` invocation:
+
+{
+  data: {
+    content: undefined,
+    image: "6779a768-8b8e-4d3a-bd61-6a77c355d07e.jpg",
+    user_id: 3,
++   title: String
+  }
+}
+
+Argument `title` is missing.
