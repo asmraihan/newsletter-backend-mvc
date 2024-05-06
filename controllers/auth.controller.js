@@ -1,6 +1,8 @@
 import prisma from "../utils/db.config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { sendMail } from "../utils/nodemailer.config.js";
+import logger from "../utils/logger.js";
 class AuthController {
     static async register(req, res) {
         try {
@@ -47,7 +49,7 @@ class AuthController {
 
             if (!findUser) {
                 return res.status(404).json({ message: "User not found" })
-            } 
+            }
 
             // compare password
             const comparePassword = bcrypt.compareSync(body.password, findUser.password);
@@ -59,16 +61,38 @@ class AuthController {
             // issue token
             const payload = {
                 id: findUser.id,
-                name : findUser.name,
+                name: findUser.name,
                 email: findUser.email,
                 image: findUser.image
 
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" })
 
-            return res.status(200).json({ accessToken:`Bearer ${token}` , message: "Login successful" })
+            return res.status(200).json({ accessToken: `Bearer ${token}`, message: "Login successful" })
 
         } catch (error) {
+            return res.status(500).json({ error: error.message, message: "Something went wrong" })
+        }
+    }
+
+    // test email
+
+    static async sendEmail(req, res) {
+        try {
+            const { email } = req.query
+
+            const payload = {
+                toEmail: email,
+                subject: "Test Email",
+                text: "This is a test email",
+                html: "<p>This is a test email</p>"
+            }
+
+            await sendMail(payload.toEmail, payload.subject, payload.text, payload.html)
+            return res.status(200).json({ message: "Email sent successfully" })
+
+        } catch (error) {
+            logger.error({ type: "email error", message: error.message })
             return res.status(500).json({ error: error.message, message: "Something went wrong" })
         }
     }
