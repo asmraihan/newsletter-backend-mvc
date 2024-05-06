@@ -1,4 +1,4 @@
-import prisma from "../utils/db.config.js";
+import prisma from "../config/db.config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateRandomNumber, imageValidator } from "../utils/helper.js";

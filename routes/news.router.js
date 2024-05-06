@@ -1,7 +1,7 @@
 import { Router } from "express";
 import NewsController from "../controllers/news.controller.js";
 import authMiddleware from "../middleware/Authenticate.js";
-import redisCache from "../utils/redis.config.js";
+import redisCache from "../config/redis.config.js";
 
 const router = Router()
 

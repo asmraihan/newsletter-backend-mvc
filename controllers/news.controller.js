@@ -1,8 +1,8 @@
-import prisma from "../utils/db.config.js";
+import prisma from "../config/db.config.js";
 import { imageValidator } from "../utils/helper.js";
 import { removeImage, uploadImage } from "../utils/imageHandler.js";
 import logger from "../utils/logger.js";
-import redisCache from "../utils/redis.config.js";
+import redisCache from "../config/redis.config.js";
 class NewsController {
     
     static async index(req, res) {

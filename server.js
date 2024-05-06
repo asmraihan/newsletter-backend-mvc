@@ -3,7 +3,7 @@ import "dotenv/config"
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import helmet from 'helmet';
-import { limiter } from './utils/ratelimiter.js';
+import { limiter } from './config/ratelimiter.config.js';
 import logger from './utils/logger.js';
 
 const app = express();
@@ -32,6 +32,9 @@ app.use("/api/auth", authRouter);
 app.use("/api", profileRouter);
 app.use("/api", newsRouter);
 
+
+// queue jobs 
+import "./jobs/index.job.js"
 
 
 app.get('/', (req, res) => {
